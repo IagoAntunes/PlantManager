@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plantmanager/core/utils/colors.dart';
-import 'package:plantmanager/features/home/home_page.dart';
+import 'package:plantmanager/features/home/pages/home_page.dart';
 
-class RegisterSuccessPage extends StatelessWidget {
-  RegisterSuccessPage({super.key});
+class RegisterPlantSuccessPage extends StatelessWidget {
+  RegisterPlantSuccessPage({super.key});
   final ValueNotifier hasText = ValueNotifier(false);
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class RegisterSuccessPage extends StatelessWidget {
                     return Hero(
                       tag: 'photoHappy',
                       child: Image.asset(
-                        'assets/images/happy_big_emoji.png',
+                        'assets/images/happy3_emoji.png',
                       ),
                     );
                   },
@@ -34,7 +34,7 @@ class RegisterSuccessPage extends StatelessWidget {
                 Hero(
                   tag: 'titleMsg',
                   child: Text(
-                    "Prontinho",
+                    "Tudo certo",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.jost().copyWith(
                       fontSize: 24,
@@ -45,7 +45,7 @@ class RegisterSuccessPage extends StatelessWidget {
                 ),
                 SizedBox(height: size.height * 0.03),
                 Text(
-                  "Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar vocêsempre que precisar",
+                  "Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com bastante amor.",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.jost().copyWith(
                     fontSize: 16,
@@ -58,13 +58,13 @@ class RegisterSuccessPage extends StatelessWidget {
                   valueListenable: hasText,
                   builder: (context, value, child) {
                     return Hero(
-                      tag: 'buttonRegister',
+                      tag: 'buttonRegisterPlant',
                       child: SizedBox(
                         width: size.width * 0.6,
                         height: size.height * 0.06,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const HomePage(),
@@ -80,7 +80,7 @@ class RegisterSuccessPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            "Confirmar",
+                            "Muito obrigado :D",
                             style: GoogleFonts.jost(
                               color: Colors.white,
                               fontSize: 16,

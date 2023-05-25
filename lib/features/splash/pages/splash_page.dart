@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:plantmanager/core/utils/colors.dart';
-import 'package:plantmanager/features/start/start_page.dart';
+import 'package:plantmanager/features/start/pages/start_page.dart';
+
+import '../widgets/logo_image_widget.dart';
+import '../widgets/title_logo_widget.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -25,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.primary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,29 +36,9 @@ class _SplashPageState extends State<SplashPage> {
         children: [
           Column(
             children: [
-              Image.asset(
-                'assets/images/icon_plant.png',
-                scale: 0.7,
-              ),
-              const SizedBox(height: 20),
-              RichText(
-                text: const TextSpan(
-                  text: 'Plant',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: 'Manager',
-                      style: TextStyle(
-                        color: Color(0xff1a5331),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              LogoImage(),
+              SizedBox(height: 20),
+              TitleLogo(),
             ],
           ),
         ],
