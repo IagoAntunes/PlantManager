@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:plantmanager/core/models/plant_model.dart';
+import 'package:plantmanager/features/home/pages/my_plants_page.dart';
 
 import '../pages/add_plant_page.dart';
-import '../pages/my_plants_page.dart';
 
 part 'home.store.g.dart';
 
@@ -16,7 +16,7 @@ abstract class _HomeStore with Store, ChangeNotifier {
   int idBottomNav = 0;
 
   final List<Widget> screens = [
-    const MyPlantsPage(),
+    MyPlantsPage(),
     const AddPlantPage(),
   ];
 

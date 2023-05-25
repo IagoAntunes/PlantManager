@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plantmanager/core/models/plant_model.dart';
@@ -7,8 +9,8 @@ import 'package:provider/provider.dart';
 import '../store/home.store.dart';
 
 class MyPlantsPage extends StatelessWidget {
-  const MyPlantsPage({super.key});
-  PlantModel? gerTeste(HomeStore store) {
+  MyPlantsPage({super.key});
+  PlantModel? getRecentPlant(HomeStore store) {
     store.myPlants.sort((a, b) => b.duration.hour.compareTo(a.duration.hour));
     var now = TimeOfDay.now().hour;
     PlantModel? auxPlant;
@@ -25,6 +27,8 @@ class MyPlantsPage extends StatelessWidget {
 
     return auxPlant == null ? null : auxPlant;
   }
+
+  final ValueNotifier confirmDelete = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +96,9 @@ class MyPlantsPage extends StatelessWidget {
                       const SizedBox(width: 20),
                       Flexible(
                         child: Text(
-                          gerTeste(store) == null
+                          getRecentPlant(store) == null
                               ? 'Nenhuma planta para regar'
-                              : 'Regue sua ${gerTeste(store)!.name} daqui ${gerTeste(store)!.duration.hour - TimeOfDay.now().hour} horas',
+                              : 'Regue sua ${getRecentPlant(store)!.name} daqui ${TimeOfDay.now().hour - getRecentPlant(store)!.duration.hour} horas',
                           style: GoogleFonts.jost(
                             color: const Color(0xff3D7199),
                             fontSize: 18,
@@ -188,8 +192,9 @@ class MyPlantsPage extends StatelessWidget {
                             const SizedBox(height: 10),
                         itemBuilder: (context, index) => Dismissible(
                           key: const Key('dismissPlants'),
-                          onDismissed: (direction) async {
-                            await showDialog<void>(
+                          confirmDismiss: (direction) async {
+                            Completer<bool> completer = Completer<bool>();
+                            await showDialog<bool>(
                               context: context,
                               builder: (BuildContext context) {
                                 return Material(
@@ -277,6 +282,7 @@ class MyPlantsPage extends StatelessWidget {
                                                     ),
                                                     onPressed: () {
                                                       Navigator.pop(context);
+                                                      completer.complete(false);
                                                     },
                                                     child: Text(
                                                       "Cancelar",
@@ -314,6 +320,7 @@ class MyPlantsPage extends StatelessWidget {
                                                           store
                                                               .myPlants[index]);
                                                       Navigator.pop(context);
+                                                      completer.complete(true);
                                                     },
                                                     child: Text(
                                                       "Deletar",
@@ -336,6 +343,7 @@ class MyPlantsPage extends StatelessWidget {
                                 );
                               },
                             );
+                            return completer.future;
                           },
                           background: Container(
                             decoration: const BoxDecoration(
@@ -394,7 +402,7 @@ class MyPlantsPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      '${store.myPlants[index].duration.hour}:${store.myPlants[index].duration.minute}',
+                                      '${store.myPlants[index].duration.hour.toString().padLeft(2, '0')}:${store.myPlants[index].duration.minute.toString().padRight(2, '0')}',
                                       style: GoogleFonts.jost(
                                         color: AppColors.greenDark,
                                         fontSize: 16,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:plantmanager/features/splash/pages/splash_page.dart';
 import 'package:provider/provider.dart';
-
 import 'features/home/store/home.store.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     ChangeNotifierProvider(
       create: (context) => HomeStore(),
